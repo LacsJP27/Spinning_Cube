@@ -6,11 +6,13 @@ A spinning 3D cube rendered with ASCII characters in JavaScript — built as a l
 
 ## How It Works (High Level)
 
-1. Define the 8 vertices of a cube in 3D space
-2. Apply rotation matrices to spin each vertex around the X, Y, and Z axes simultaneously
-3. Project each rotated 3D point onto a 2D screen
-4. Use Z-buffering to decide which character to draw at each grid position (closer surfaces are darker)
-5. Loop with `requestAnimationFrame` to animate the cube
+1. Define the 6 faces of a cube, each with a starting corner, two direction vectors, and a normal vector
+2. Each frame, rotate every face's normal vector using the combined rotation matrix `R = Rz · Ry · Rx`
+3. Compute `luminance = normal · light_direction` (dot product) to determine brightness
+4. Map luminance to an ASCII character from the set `.,-~:;=!*#$@`
+5. Sample points across each face's surface and project them to 2D screen coordinates
+6. Use Z-buffering to decide which face wins at each screen position when faces overlap
+7. Loop with `requestAnimationFrame` to animate the cube
 
 ---
 
@@ -116,6 +118,27 @@ y' = y · (z' / z)
 Where:
 - `z'` = distance from the camera to the screen
 - `z`  = distance from the camera to the point
+
+---
+
+## Surface Rendering
+
+Each face of the cube is rendered by sampling points across its surface using two perpendicular direction vectors (tangent vectors). For each sampled point:
+
+```
+point = corner + u * direction1 + v * direction2
+```
+
+Where `u` and `v` step across the face in small increments.
+
+All points on the same flat face share the same normal vector, so the entire face gets **one ASCII character** determined by:
+
+```
+luminance = dot(normal, light_direction)
+character = ".,-~:;=!*#$@"[luminance_index]
+```
+
+The character can change each frame as the cube rotates and the normal's angle to the light changes.
 
 ---
 
