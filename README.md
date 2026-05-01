@@ -8,11 +8,9 @@ A spinning 3D cube rendered with ASCII characters in JavaScript — built as a l
 
 1. Define the 6 faces of a cube, each with a starting corner, two direction vectors, and a normal vector
 2. Each frame, rotate every face's normal vector using the combined rotation matrix `R = Rz · Ry · Rx`
-3. Compute `luminance = normal · light_direction` (dot product) to determine brightness
-4. Map luminance to an ASCII character from the set `.,-~:;=!*#$@`
-5. Sample points across each face's surface and project them to 2D screen coordinates
-6. Use Z-buffering to decide which face wins at each screen position when faces overlap
-7. Loop with `requestAnimationFrame` to animate the cube
+3. Sample points across each face's surface and project them to 2D screen coordinates
+4. Use Z-buffering to decide which face wins at each screen position when faces overlap
+5. Loop with `requestAnimationFrame` to animate the cube
 
 ---
 
@@ -104,6 +102,13 @@ In 3D, rotation happens around an **axis**. The key insight: whichever axis you 
 
 > Note: The Y-axis matrix has its sin terms flipped compared to Rx and Rz. This is a consequence of the right-hand rule — the Y-axis handedness is opposite to X and Z.
 
+Take the product of all three rotations:
+Where Rx, Ry, Rz = the result rotation vectors of the perspective axis and R is the final rotation,
+
+```
+
+```
+
 ---
 
 ## Projection (3D → 2D Screen)
@@ -116,8 +121,9 @@ y' = y · (z' / z)
 ```
 
 Where:
+
 - `z'` = distance from the camera to the screen
-- `z`  = distance from the camera to the point
+- `z` = distance from the camera to the point
 
 ---
 
@@ -131,14 +137,18 @@ point = corner + u * direction1 + v * direction2
 
 Where `u` and `v` step across the face in small increments.
 
-All points on the same flat face share the same normal vector, so the entire face gets **one ASCII character** determined by:
+All points on the same flat face share the same normal vector, one entire face gets a predetermined **ASCII character** that does not change once initialized
 
-```
-luminance = dot(normal, light_direction)
-character = ".,-~:;=!*#$@"[luminance_index]
-```
+---
 
-The character can change each frame as the cube rotates and the normal's angle to the light changes.
+## renderFace()
+
+1. Sample point → corner + u*dir1 + v*dir2
+2. Rotate the point (apply rotateX, rotateY, rotateZ)
+3. Project to 2D
+4. Shift math centered coordinates to buffer-centered (add `WIDTH/2` and `HEIGHT/2`)
+5. Round the floats to integer indices
+6. Write to buffer
 
 ---
 
