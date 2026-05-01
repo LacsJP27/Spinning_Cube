@@ -1,10 +1,10 @@
 const cube = document.getElementById('cube');
-const WIDTH = 60;
-const HEIGHT = 60;
+const WIDTH = 80;
+const HEIGHT = 80;
 const CAMERA_TO_SCREEN = 45;
 const NUM_POINT_SAMPLES = 40;
 const ROTATION_RATE = 0.01;
-const OFFSET_VAL = 6;
+const OFFSET_VAL = 4;
 
 class Square {
 	constructor(

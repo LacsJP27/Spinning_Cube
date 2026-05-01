@@ -4,6 +4,16 @@ A spinning 3D cube rendered with ASCII characters in JavaScript — built as a l
 
 ---
 
+## The Why
+
+I am reaching the end of my third year as a Computer Science student and I am struggling with the balance of using LLMs. There are two ends of LLM usage as a student. On one end of the spectrum is the vibe-coding goblin. The vibe-coding goblin is someone on the extreme end of the spectrum exploiting LLMs to drain every last drop of code out of them with absolutely zero interest in what the code means nor how it works. These people are purely result driven and unapologetically moving fast and breaking things. On the other end of the spectrum is the LLM hermit. The LLM hermit hates the fact the people are using LLMs at all, they use stack overflow exclusively, outlaw all usage of LLMs in their own home but truly try to solve problems on their own to gain an in-depth understanding of what is going on in the code.
+
+Vibe-Coding Goblin <---------------------------------------------------> LLM Hermit
+
+Somewhere in between there is a golden ratio and my recently declared mission is to find this elusive ratio! This project was a voyage to explore this area in between. I hand-typed every line of code in this project I did not copy and paste or have claude write any code for me. Instead, I spent half an hour making a cs-tutor SKILL.md file for claude code to reference that I have attached. Instead of code, claude asked my questions pushed me to think for myself, derive the math behind the code, and write the code on my own. Through process, I noticed that I actually understand why every single line of code is needed, but also I didn't waste hours trying to find a solution on the web. It was not super fast to build, but it was definitely faster than the LLM Hermit's iteration. I would like to argue that this approach to use LLMs is the best possible waym that I have discovered, to balance learning code (or just learning in general), learning to work with LLMs, and iterating faster. Maybe the line above is not so linear, and the best of attributes of the Vibe-Coding Goblin and the LLM Hermit combined will make up the attributes of the top engineers of tomorrow! Btw 80% of the rest of this README was written by Claude to be honest 😂 (I did the math derivations but I was too lazy write it in the README myself)
+
+---
+
 ## How It Works (High Level)
 
 1. Define the 6 faces of a cube, each with a starting corner, two direction vectors, and a normal vector
@@ -103,11 +113,7 @@ In 3D, rotation happens around an **axis**. The key insight: whichever axis you 
 > Note: The Y-axis matrix has its sin terms flipped compared to Rx and Rz. This is a consequence of the right-hand rule — the Y-axis handedness is opposite to X and Z.
 
 Take the product of all three rotations:
-Where Rx, Ry, Rz = the result rotation vectors of the perspective axis and R is the final rotation,
-
-```
-
-```
+Where `Rx, Ry, Rz` = the result rotation vectors of the perspective axis and `R` is the final rotation,
 
 ---
 
@@ -155,3 +161,9 @@ All points on the same flat face share the same normal vector, one entire face g
 ## Z-Buffering
 
 When multiple surfaces overlap on screen, Z-buffering decides which one to draw by keeping track of the depth (z-value) at each pixel position — the closest surface wins.
+
+Shout out if you read this whole thing!
+
+Here's a quote I got off Google as your reward:
+
+“There is nothing noble in being superior to your fellow man; true nobility is being superior to your former self.” - Ernest Hemingway
