@@ -1,10 +1,10 @@
 const cube = document.getElementById('cube');
-const WIDTH = 80;
-const HEIGHT = 80;
+const WIDTH = 60;
+const HEIGHT = 60;
 const CAMERA_TO_SCREEN = 45;
 const NUM_POINT_SAMPLES = 40;
 const ROTATION_RATE = 0.01;
-const OFFSET_VAL = 4;
+const OFFSET_VAL = 6;
 
 class Square {
 	constructor(
@@ -142,16 +142,16 @@ function animate(faces, angleX, angleY, angleZ) {
 
 const faces = new Array(6);
 // front
-faces[0] = new Square([-1, -1, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], '@');
+faces[0] = new Square([-1, -1, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], '+');
 // back
-faces[1] = new Square([-1, -1, -1], [1, 0, 0], [0, 1, 0], [0, 0, -1], '#');
+faces[1] = new Square([-1, -1, -1], [1, 0, 0], [0, 1, 0], [0, 0, -1], '~');
 // left
-faces[2] = new Square([-1, -1, -1], [0, 0, 1], [0, 1, 0], [-1, 0, 0], '*');
+faces[2] = new Square([-1, -1, -1], [0, 0, 1], [0, 1, 0], [-1, 0, 0], ';');
 // right
-faces[3] = new Square([1, -1, 1], [0, 0, -1], [0, 1, 0], [1, 0, 0], '~');
+faces[3] = new Square([1, -1, 1], [0, 0, -1], [0, 1, 0], [1, 0, 0], '.');
 // top
 faces[4] = new Square([-1, 1, 1], [0, 0, -1], [1, 0, 0], [0, 1, 0], '^');
 // bottom
-faces[5] = new Square([-1, -1, 1], [1, 0, 0], [0, 0, -1], [0, -1, 0], '+');
+faces[5] = new Square([-1, -1, 1], [1, 0, 0], [0, 0, -1], [0, -1, 0], '|');
 
 animate(faces, 0, 0, 0);
