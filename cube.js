@@ -1,9 +1,10 @@
 const cube = document.getElementById('cube');
 const WIDTH = 80;
-const HEIGHT = 40;
-const CAMERA_TO_SCREEN = 100;
+const HEIGHT = 80;
+const CAMERA_TO_SCREEN = 45;
 const NUM_POINT_SAMPLES = 40;
 const ROTATION_RATE = 0.01;
+const OFFSET_VAL = 4;
 
 class Square {
 	constructor(
@@ -21,11 +22,15 @@ class Square {
 	}
 }
 
-function createBuffer() {
+function createBuffer(zBuffer = false) {
 	const buffer = [];
 	for (let y = 0; y < HEIGHT; y++) {
 		buffer[y] = [];
 		for (let x = 0; x < WIDTH; x++) {
+			if (zBuffer) {
+				buffer[y][x] = Infinity;
+				continue;
+			}
 			buffer[y][x] = ' ';
 		}
 	}
@@ -74,8 +79,8 @@ function rotateZ(point, alpha) {
 
 function projection(point) {
 	const [x, y, z] = point;
-	const xp = x * (CAMERA_TO_SCREEN / z);
-	const yp = y * (CAMERA_TO_SCREEN / z);
+	const xp = x * (CAMERA_TO_SCREEN / (z + OFFSET_VAL)) * 1.5;
+	const yp = y * (CAMERA_TO_SCREEN / (z + OFFSET_VAL));
 
 	return [xp, yp];
 }
@@ -90,7 +95,7 @@ function pointOutOfBounds(point) {
 	return outOfBounds;
 }
 
-function renderFace(face, angleX, angleY, angleZ, buffer) {
+function renderFace(face, angleX, angleY, angleZ, buffer, zBuffer) {
 	const sampleStep = 2 / NUM_POINT_SAMPLES;
 	for (let u = 0; u <= 2; u += sampleStep) {
 		for (let v = 0; v <= 2; v += sampleStep) {
@@ -110,7 +115,10 @@ function renderFace(face, angleX, angleY, angleZ, buffer) {
 			if (pointOutOfBounds(buffIdx)) continue;
 
 			// buffer is buffer[y][x]
-			buffer[buffIdx[1]][buffIdx[0]] = face.char;
+			if (rotated[2] < zBuffer[buffIdx[1]][buffIdx[0]]) {
+				zBuffer[buffIdx[1]][buffIdx[0]] = rotated[2];
+				buffer[buffIdx[1]][buffIdx[0]] = face.char;
+			}
 		}
 	}
 
@@ -119,14 +127,14 @@ function renderFace(face, angleX, angleY, angleZ, buffer) {
 
 function animate(faces, angleX, angleY, angleZ) {
 	const buffer = createBuffer();
+	const zBuffer = createBuffer(true);
 	// Convert degrees to radians and pass to Math.sin
 
 	angleX += ROTATION_RATE;
 	angleY += ROTATION_RATE;
 	angleZ += ROTATION_RATE;
-
 	for (const face of faces) {
-		renderFace(face, angleX, angleY, angleZ, buffer);
+		renderFace(face, angleX, angleY, angleZ, buffer, zBuffer);
 	}
 	renderBuffer(buffer);
 	requestAnimationFrame(() => animate(faces, angleX, angleY, angleZ));
