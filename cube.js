@@ -130,7 +130,7 @@ function animate(faces, angleX, angleY, angleZ) {
 	const zBuffer = createBuffer(true);
 	// Convert degrees to radians and pass to Math.sin
 
-	angleX += ROTATION_RATE;
+	angleX += ROTATION_RATE + 0.005;
 	angleY += ROTATION_RATE;
 	angleZ += ROTATION_RATE;
 	for (const face of faces) {
@@ -142,16 +142,16 @@ function animate(faces, angleX, angleY, angleZ) {
 
 const faces = new Array(6);
 // front
-faces[0] = new Square([-1, -1, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], '+');
+faces[0] = new Square([-1, -1, 1], [1, 0, 0], [0, 1, 0], [0, 0, 1], 'j');
 // back
-faces[1] = new Square([-1, -1, -1], [1, 0, 0], [0, 1, 0], [0, 0, -1], '~');
+faces[1] = new Square([-1, -1, -1], [1, 0, 0], [0, 1, 0], [0, 0, -1], 'p');
 // left
-faces[2] = new Square([-1, -1, -1], [0, 0, 1], [0, 1, 0], [-1, 0, 0], ';');
+faces[2] = new Square([-1, -1, -1], [0, 0, 1], [0, 1, 0], [-1, 0, 0], 'l');
 // right
-faces[3] = new Square([1, -1, 1], [0, 0, -1], [0, 1, 0], [1, 0, 0], '.');
+faces[3] = new Square([1, -1, 1], [0, 0, -1], [0, 1, 0], [1, 0, 0], 'a');
 // top
-faces[4] = new Square([-1, 1, 1], [0, 0, -1], [1, 0, 0], [0, 1, 0], '^');
+faces[4] = new Square([-1, 1, 1], [0, 0, -1], [1, 0, 0], [0, 1, 0], 'c');
 // bottom
-faces[5] = new Square([-1, -1, 1], [1, 0, 0], [0, 0, -1], [0, -1, 0], '|');
+faces[5] = new Square([-1, -1, 1], [1, 0, 0], [0, 0, -1], [0, -1, 0], 's');
 
 animate(faces, 0, 0, 0);
